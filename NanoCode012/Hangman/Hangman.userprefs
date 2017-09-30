@@ -1,7 +1,7 @@
 ﻿<Properties StartupConfiguration="{63EADAAF-9EE0-4DA5-B017-9603B1F6EEBF}|Default">
   <MonoDevelop.Ide.Workbench ActiveDocument="Hangman/Program.cs">
     <Files>
-      <File FileName="Hangman/Program.cs" Line="79" Column="52" />
+      <File FileName="Hangman/Program.cs" Line="103" Column="13" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
