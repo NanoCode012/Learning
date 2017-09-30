@@ -1,0 +1,10 @@
+/Users/kevinvong/Desktop/Visual Studio/Hangman/Hangman/bin/Debug/Hangman.exe
+/Users/kevinvong/Desktop/Visual Studio/Hangman/Hangman/bin/Debug/Hangman.pdb
+/Users/kevinvong/Desktop/Visual Studio/Hangman/Hangman/obj/x86/Debug/Hangman.csproj.CoreCompileInputs.cache
+/Users/kevinvong/Desktop/Visual Studio/Hangman/Hangman/obj/x86/Debug/Hangman.exe
+/Users/kevinvong/Desktop/Visual Studio/Hangman/Hangman/obj/x86/Debug/Hangman.pdb
+/Users/kevinvong/Desktop/Visual Studio/Learning/NanoCode012/Hangman/Hangman/bin/Debug/Hangman.exe
+/Users/kevinvong/Desktop/Visual Studio/Learning/NanoCode012/Hangman/Hangman/bin/Debug/Hangman.pdb
+/Users/kevinvong/Desktop/Visual Studio/Learning/NanoCode012/Hangman/Hangman/obj/x86/Debug/Hangman.csproj.CoreCompileInputs.cache
+/Users/kevinvong/Desktop/Visual Studio/Learning/NanoCode012/Hangman/Hangman/obj/x86/Debug/Hangman.exe
+/Users/kevinvong/Desktop/Visual Studio/Learning/NanoCode012/Hangman/Hangman/obj/x86/Debug/Hangman.pdb
