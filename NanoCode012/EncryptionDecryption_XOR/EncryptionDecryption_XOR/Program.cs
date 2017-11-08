@@ -24,19 +24,19 @@ namespace EncryptionDecryption_XOR
             else
             {
                 Decryption(key_path, encrypt_path, decrypt_path);
-
             }
         }
 
         static void Decryption(string key_path, string encrypt_path, string decrypt_path)
         {
-            //Console.WriteLine("Please enter text you want to decrypt : ");
-            //var text = Console.ReadLine();
+            //I commented out some features because they don't work properly.
+            Console.WriteLine("Please enter text you want to decrypt : ");
+            var text = Console.ReadLine();
 
             Console.WriteLine("Please enter secret key : ");
             var key = Console.ReadLine();
 
-            //File.WriteAllText(encrypt_path, text);
+            File.WriteAllText(encrypt_path, text);
             File.WriteAllText(key_path, key);
 
             var encryptedByte = File.ReadAllBytes(encrypt_path);
@@ -95,7 +95,7 @@ namespace EncryptionDecryption_XOR
             var index = 0;
             var intervals = textByte.Length / keyByte.Length;
             var encryption = new byte[textByte.Length];
-            for (var i = 0; i <= intervals; i++)//runs 6 times, maybe 5
+            for (var i = 0; i <= intervals; i++)
             {
                 for (var j = 0; j < keyByte.Length; j++)
                 {
