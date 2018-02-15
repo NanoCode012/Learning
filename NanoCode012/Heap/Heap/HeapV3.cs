@@ -1,59 +1,65 @@
 ﻿using System;
+
 namespace Heap
 {
-    class HeapV2
+    class HeapV3<T> where T:IComparable
     {
-        int[] arr;
-        int size;//Our visual of the BST's size
+        T[] arr;
+        int size;//Our visual of the BinaryTree's size
         int capacity;//The real capacity of the array
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Heap.HeapV2"/> class.
+        /// Initializes a new instance of the <see cref="T:Heap.HeapV3"/> class.
         /// </summary>
-        public HeapV2(int cap = 10)
+        public HeapV3(int cap = 10)
         {
             if (cap <= 0) throw new Exception("Cannot initialize heap with cap 0 or less");
-            arr = new int[cap];
+            arr = new T[cap];
             size = 0;
             capacity = cap;
         }
 
         /// <summary>
-        /// Peek the highest value in the heap, the root.
+        /// Peek the lowest value in the heap, the root.
         /// </summary>
-        public int Peek(){
+        public T Peek()
+        {
             if (size == 0) throw new Exception("Size of array equal to 0. Capacity is not 0. Check variable 'size'. Cannot peek from empty.");
             return arr[0];
         }
 
         /// <summary>
-        /// Pops the max, and adjust heap to maintain Max-Heap property.
+        /// Pops the min, and adjust heap to maintain Min-Heap property.
         /// </summary>
-        public int Pop(){
+        public T Pop()
+        {
             if (size == 0) throw new Exception("Size of array equal to 0. Capacity is not 0. Check variable 'size'. Cannot pop from empty.");
-            var max = arr[0];
-            Swap(0, size);//Swap last element with first
+            var min = arr[0];
+            Swap(0, size - 1);//Swap last element with first
             size--;//To ignore the past-largest element
             var index = 0;
-            while (GotLeftChild(index)){
-                var biggestValIndex = GetLeftChildIndex(index);
-                if (GotRightChild(index) && GetRightChildValue(index) > GetLeftChildValue(index)) {
-                    biggestValIndex = GetRightChildIndex(index);
-                }
-                if (arr[index] < arr[biggestValIndex])
+            while (GotLeftChild(index))
+            {
+                var smallestValIndex = GetLeftChildIndex(index);
+                if (GotRightChild(index) && GetRightChildValue(index).CompareTo(GetLeftChildValue(index)) < 0)
                 {
-                    Swap(index, biggestValIndex);
-                    index = biggestValIndex;
+                    smallestValIndex = GetRightChildIndex(index);
+                }
+                if (arr[index].CompareTo(arr[smallestValIndex]) < 0)
+                {
+                    Swap(index, smallestValIndex);
+                    index = smallestValIndex;
                 }
                 else break;
             }
-            return max;
+            return min;
         }
 
         /// <summary>
         /// Swap the specified index1 and index2.
         /// </summary>
-        public void Swap(int index1, int index2){
+        private void Swap(int index1, int index2)
+        {
             var temp = arr[index1];
             arr[index1] = arr[index2];
             arr[index2] = temp;
@@ -62,31 +68,32 @@ namespace Heap
         /// <summary>
         /// Multiplies the capacity of an array by a multiplier, default to 2.
         /// </summary>
-        public void Expand(int multiplier = 2){
-            if (size == capacity){
+        private void Expand(int multiplier = 2)
+        {
+            if (size == capacity)
+            {
                 Array.Resize(ref arr, capacity * multiplier);
                 capacity *= multiplier;
             }
         }
 
-        //For testing only
-        public int Length(){
-            return arr.Length;
-        }
-
         /// <summary>
-        /// Push the specified val, and adjust heap to maintain Max-Heap property.
+        /// Push the specified val, and adjust heap to maintain Min-Heap property.
         /// </summary>
-        public void Push(int val){
+        public void Push(T val)
+        {
             var index = size;
-            if (size == 0){
+            if (size == 0)
+            {
                 arr[0] = val;
                 size++;
-            } 
-            else{
+            }
+            else
+            {
                 Expand();
                 arr[index] = val;
-                while(GotParent(index) && GetParentValue(index) < val){
+                while (GotParent(index) && GetParentValue(index).CompareTo(val) > 0)
+                {
                     Swap(GetParentIndex(index), index);
                     index = GetParentIndex(index);
                 }
@@ -94,19 +101,64 @@ namespace Heap
             }
         }
 
+        /// <summary>
+        /// Replace the specified oldValue if newValue is smaller
+        /// </summary>
+        public void Replace(T newValue)
+        {
+            int index = SearchForIndex(newValue);
+            if (arr[index].CompareTo(newValue) > 0)
+            {
+                arr[index] = newValue;
+            }
+        }
 
+        public bool CheckIfExists(T val)
+        {
+            return (SearchForIndex(val) != -1);
+        }
+
+        private int SearchForIndex(T val)
+        {
+            for (int i = 0; i < size; i++)
+            {
+                if (arr[i].Equals(val))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// Returns count of T.
+        /// </summary>
+        public int Count()
+        {
+            return size;
+        }
+
+        /// <summary>
+        /// Clear array and reset size.
+        /// </summary>
+        public void Clear()
+        {
+            Array.Clear(arr,0,size);
+            size = 0;
+        }
 
         /// <summary>
         /// Check if got parent.
         /// </summary>
-        public bool GotParent(int childIndex){
+        private bool GotParent(int childIndex)
+        {
             return (GetParentIndex(childIndex) >= 0 && childIndex != 0);
         }
 
         /// <summary>
         /// Check if got child by finding if left-child exists
         /// </summary>
-        public bool GotLeftChild(int parentIndex)
+        private bool GotLeftChild(int parentIndex)
         {
             return (GetLeftChildIndex(parentIndex) < size);
         }
@@ -114,7 +166,7 @@ namespace Heap
         /// <summary>
         /// Check if got child by finding if right-child exists
         /// </summary>
-        public bool GotRightChild(int parentIndex)
+        private bool GotRightChild(int parentIndex)
         {
             return (GetRightChildIndex(parentIndex) < size);
         }
@@ -124,9 +176,10 @@ namespace Heap
         /// <summary>
         /// Gets the index of the parent from a given child index.
         /// </summary>
-        public int GetParentIndex(int childIndex){
+        private int GetParentIndex(int childIndex)
+        {
             if (childIndex % 2 == 0)// is right-tree
-            { 
+            {
                 return (childIndex - 2) / 2;
             }
             else return (childIndex - 1) / 2;
@@ -135,7 +188,7 @@ namespace Heap
         /// <summary>
         /// Gets the index of the left-child from a given parent index.
         /// </summary>
-        public int GetLeftChildIndex(int parentIndex)
+        private int GetLeftChildIndex(int parentIndex)
         {
             return (parentIndex * 2 + 1);
         }
@@ -143,7 +196,7 @@ namespace Heap
         /// <summary>
         /// Gets the index of the right-child from a given parent index.
         /// </summary>
-        public int GetRightChildIndex(int parentIndex)
+        private int GetRightChildIndex(int parentIndex)
         {
             return (parentIndex * 2 + 2);
         }
@@ -153,14 +206,15 @@ namespace Heap
         /// <summary>
         /// Gets the parent value from a given child index.
         /// </summary>
-        public int GetParentValue(int childIndex){
+        private T GetParentValue(int childIndex)
+        {
             return arr[GetParentIndex(childIndex)];
         }
 
         /// <summary>
         /// Gets the left-child value from a given parent index.
         /// </summary>
-        public int GetLeftChildValue(int parentIndex)
+        private T GetLeftChildValue(int parentIndex)
         {
             return arr[GetLeftChildIndex(parentIndex)];
         }
@@ -168,16 +222,10 @@ namespace Heap
         /// <summary>
         /// Gets the right-child value from a given child index.
         /// </summary>
-        public int GetRightChildValue(int parentIndex)
+        private T GetRightChildValue(int parentIndex)
         {
             return arr[GetRightChildIndex(parentIndex)];
         }
 
-
-
-        //For testing only
-        public int[] GetAr(){
-            return arr;
-        }
     }
 }

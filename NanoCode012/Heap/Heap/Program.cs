@@ -72,6 +72,24 @@ namespace Heap
             Console.WriteLine(h2.Pop());
             Console.WriteLine(h2.Pop());
             Console.WriteLine(h2.Pop());
+
+            Console.WriteLine("|||||||||||||||||||");
+            var h3 = new HeapV3<int>();
+            h3.Push(10);
+            h3.Push(19);
+            h3.Push(100);
+            h3.Push(77);
+            h3.Push(-3);
+            h3.Push(29);
+            Console.WriteLine(h3.Pop());
+            Console.WriteLine(h3.Pop());
+            Console.WriteLine(h3.Pop());
+            Console.WriteLine(h3.Pop());
+            Console.WriteLine(h3.Pop());
+            Console.WriteLine(h3.Pop());
+
+
+
         }
     }
 }
