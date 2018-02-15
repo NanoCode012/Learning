@@ -2,7 +2,7 @@
 
 namespace Heap
 {
-    class HeapV3<T> where T:IComparable
+    class HeapV3<T> where T : IComparable
     {
         T[] arr;
         int size;//Our visual of the BinaryTree's size
@@ -45,7 +45,7 @@ namespace Heap
                 {
                     smallestValIndex = GetRightChildIndex(index);
                 }
-                if (arr[index].CompareTo(arr[smallestValIndex]) < 0)
+                if (arr[index].CompareTo(arr[smallestValIndex]) > 0)
                 {
                     Swap(index, smallestValIndex);
                     index = smallestValIndex;
@@ -143,7 +143,7 @@ namespace Heap
         /// </summary>
         public void Clear()
         {
-            Array.Clear(arr,0,size);
+            Array.Clear(arr, 0, size);
             size = 0;
         }
 
